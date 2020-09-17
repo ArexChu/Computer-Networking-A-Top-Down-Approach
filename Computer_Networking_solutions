@@ -1,0 +1,484 @@
+Chapter 2 Review Questions
+
+SECTION 2.1
+
+R1. List five nonproprietary Internet applications and the application-layer protocols that they use.
+http,smtp,ftp,soap,icmp(network protocal)
+
+R2. What is the difference between network architecture and application architecture? 
+network architecture is blow the application protocal.
+
+R3. For a communication session between a pair of processes, which process is the client and which is the server?
+the process that first call the other process is the client, and the other is the server.
+
+R4. Why are the terms client and server still used in peer-to-peer applications?
+p2p application also need initiates the communication
+the right answer:
+the peer that is receiving a file is the client, the other is the server.
+
+R5. What information is used by a process running on one host to identify a process running on another host?
+ip:port
+
+R6. What is the role of HTTP in a network application? What other components are needed to complete a Web application?
+the key protocal for applicatuon to communicate, business logic
+
+R7. Referring to Figure 2.4, we see that none of the applications listed in Figure 2.4 requires both no data loss and timing. Can you conceive of an application that requires no data loss and that is also highly time-sensitive?
+pay application
+
+R8. List the four broad classes of services that a transport protocol can provide.For each of the service classes, indicate if either UDP or TCP (or both) provides such a service.
+1. no data loss TCP
+2. fast UDP
+3. encode UDP TCP
+4. trasport data UDP TCP
+the right answer:
+1. reliable data transfer TCP not UDP
+2. time guarantee neither
+3. data encryption neither
+4. throughput guarantee neigher
+
+R9. Recall that TCP can be enhanced with SSL to provide process-to-process security services, including encryption. Does SSL operate at the transport layer or the application layer? If the application developer wants TCP to be enhanced with SSL, what does the developer have to do?
+SSL operate at th application layer. the developer should call the SSL socket API before call the TCP socket.
+
+SECTION 2.2–2.5
+
+R10. What is meant by a handshaking protocol?
+handshaking protocol means how the cliet and the server initiate the comminication.
+
+R11. What does a stateless protocol mean? Is IMAP stateless? What about SMTP?
+stateless mean no user info needed. SMTP is stateless. 
+the right answer:
+stateless means the server doesn't save client's state.
+
+R12. How can websites keep track of users? Do they always need to use cookies? 
+use cookies. yes.
+the right answer:
+when the user first visits the site, the server creates a unique identify number, save into the database, and sends back to the client as the cookie number. the client save the cookie number. when the client visit the site next time, it sends the cookie number back to the server, so the site knows the client.
+
+R13. Describe how Web caching can reduce the delay in receiving a requested object. Will Web caching reduce the delay for all objects requested by a user or for only some of the objects? Why?
+without the web caching, every request will going to the server. but with web caching, the requst will going to the proxy when the files are up to date. No, only for the up to date objects.
+the right answer:
+web caching can reduce the delay for all the objects.
+
+R14. Telnet into a Web server and send a multiline request message. Include in the request message the If-modified-since: header line to force a response message with the 304 Not Modified status code.
+
+R15. Are there any constraints on the format of the HTTP body? What about the email message body sent with SMTP? How can arbitrary data be transmitted over SMTP?
+No.
+
+R16. Suppose Alice, with a Web-based e-mail account (such as Hotmail or Gmail), sends a message to Bob, who accesses his mail from his mail server using POP3. Discuss how the message gets from Alice’s host to Bob’s host. Be sure to list the series of application-layer protocols that are used to move the message between the two hosts.
+Alice's host --> Alice's email server --> Bob's email server --> Bob's host
+             HTTP                     SMTP                   POP3
+
+R17. Print out the header of an e-mail message you have recently received. How many Received: header lines are there? Analyze each of the header lines in the message.
+sender, receiver, subject, body
+the right answer:
+
+R18. Assume you have multiple devices, and you connect to your email provider using POP3. You retrieve messages with the “download and keep” strategy from multiple devices. Can your email client tell if you have already read the message in this scenario?
+No, it's stateless.
+To be determined
+
+R19. Why are MX records needed? Would it not be enough to use a CNAME record? (Assume the email client looks up email addresses through a Type A query and that the target host only runs an email server.)
+No, MX records are used to location the email address.
+To be determined
+
+R20. What is the difference between recursive and iterative DNS queries?
+recursive DNS queries need DNS server to query another DNS server. interative DNS queries can do by client.
+
+SECTION 2.5
+
+R21. Under what circumstances is file downloading through P2P much faster than through a centralized client-server approach? Justify your answer using Equation 2.2.
+when the number of the peers is great.
+
+R22. Consider a new peer Alice that joins BitTorrent without possessing any chunks. Without any chunks, she cannot become a top-four uploader for any of the other peers, since she has nothing to upload. How then will Alice get her first chunk?
+she can get her chunk from other peers.
+
+R23. Assume a BitTorrent tracker suddenly becomes unavailable. What are its consequences? Can files still be downloaded?
+files cann't be downloaded.
+
+SECTION 2.6
+
+R24. CDNs typically adopt one of two different server placement philosophies. Name and briefly describe them.
+enter deep: get close to the end users. Which results in high maintenance, but lower delay and high throughput.
+bring home: CDNs place their clusters in Internet Exchange Points. Which results in lower maintenance, but high delay and lower throughut.
+
+R25. Besides network-related considerations such as delay, loss, and bandwidth performance, there are other important factors that go into designing a CDN server selection strategy. What are they?
+maintenance of CDNs.
+the right answer:
+
+SECTION 2.7
+
+R26. In Section 2.7, the UDP server described needed only one socket, whereas the TCP server needed two sockets. Why? If the TCP server were to support n simultaneous connections, each from a different client host, how many sockets would the TCP server need?
+when client send data to UDO server, it send the data directly, but when client send data to TCP sever, it should initiate the connection, then it send the data.
+2n
+the right answer:
+each client connects the UDP server through a socket.
+each clinet initiates the connetion with the TCP server through the welcoming socket, and connects the TCP server through a new socket.
+n+1
+
+R27. For the client-server application over TCP described in Section 2.7, why must the server program be executed before the client program? For the client-server application over UDP, why may the client program be executed before the server program?
+For the client-server application over TCP, the client must initiate the connection to the server, so the server must listen before the client send data.
+For application over UDP, the client just send data to the server, the client doesn't care if the data is delivered.
+
+Problems
+P1. True or false?
+
+a. A user requests a Web page that consists of some text and three images. For this page, the client will send one request message and receive four response messages.
+F
+
+b. Two distinct Web pages (for example, www.mit.edu/research .html and www.mit.edu/students.html) can be sent over the same persistent connection.
+T
+
+c. With nonpersistent connections between browser and origin server, it is possible for a single TCP segment to carry two distinct HTTP request messages.
+F
+
+d. The Date: header in the HTTP response message indicates when the object in the response was last modified.
+T
+the right answer:
+F
+
+e. HTTP response messages never have an empty message body.
+F
+
+P2. SMS, iMessage, and WhatsApp are all smartphone real-time messaging systems. After doing some research on the Internet, for each of these systems write one paragraph about the protocols they use. Then write a paragraph explaining how they differ.
+SMS
+SS7 protocal
+iMessage
+APN
+WhatsApp
+XMPP
+
+P3. Assume you open a browser and enter http://yourbusiness.com/about.html in the address bar. What happens until the webpage is displayed? Provide details about the protocol(s) used and a high-level description of the messages exchanged.
+http protocol is used. firstly, the client get the ip from dns server, the domain is yourbusiness.com; secondedly, the client initiate the communication with the server process, the welcoming port is 80; the client send the request /about.html, and the server response the webpage.
+
+P4. Consider the following string of ASCII characters that were captured by Wireshark when the browser sent an HTTP GET message (i.e., this is the actual content of an HTTP GET message). The characters <cr><lf> are carriage return and line-feed characters (that is, the italized character string <cr> in the text below represents the single carriage-return character that was contained at that point in the HTTP header). Answer the following questions, indicating where in the HTTP GET message below you find the answer.
+
+GET /cs453/index.html HTTP/1.1<cr><lf>Host: gai a.cs.umass.edu<cr><lf>User-Agent: Mozilla/5.0 ( Windows;U; Windows NT 5.1; en-US; rv:1.7.2) Gec ko/20040804 Netscape/7.2 (ax) <cr><lf>Accept:ex t/xml, application/xml, application/xhtml+xml, text /html;q=0.9, text/plain;q=0.8,image/png,*/*;q=0.5
+<cr><lf>Accept-Language: en-us,en;q=0.5<cr><lf>AcceptEncoding: zip,deflate<cr><lf>Accept-Charset: ISO -8859-1,utf-8;q=0.7,*;q=0.7<cr><lf>Keep-Alive: 300<cr> <lf>Connection:keep-alive<cr><lf><cr><lf>
+
+a. What is the URL of the document requested by the browser?
+http://a.cs.umass.edu/cs453/index.html
+
+b. What version of HTTP is the browser running?
+HTTP/1.1
+
+c. Does the browser request a non-persistent or a persistent connection?
+don't know
+the right answer:
+persistent connection, Keep-Alive
+
+d. What is the IP address of the host on which the browser is running?
+don't know
+
+e. What type of browser initiates this message? Why is the browser type needed in an HTTP request message?
+Mozilla/5.0
+different browser may display different pages.
+
+P5. The text below shows the reply sent from the server in response to the HTTP GET message in the question above. Answer the following questions, indicating where in the message below you find the answer.
+
+HTTP/1.1 200 OK<cr><lf>Date: Tue, 07 Mar 2008 12:39:45GMT<cr><lf>Server: Apache/2.0.52 (Fedora) <cr><lf>Last-Modified: Sat, 10 Dec2005 18:27:46 GMT<cr><lf>ETag: ”526c3-f22-a88a4c80”<cr><lf>AcceptRanges: bytes<cr><lf>Content-Length: 3874<cr><lf> Keep-Alive: timeout=max=100<cr><lf>Connection: Keep-Alive<cr><lf>Content-Type: text/html; charset= ISO-8859-1<cr><lf><cr><lf><!doctype html public ”//w3c//dtd html 4.0transitional//en”><lf><html><lf> <head><lf> <meta http-equiv=”Content-Type” content=”text/html; charset=iso-8859-1”><lf> <meta name=”GENERATOR” content=”Mozilla/4.79 [en] (Windows NT 5.0; U) Netscape]”><lf> <title>CMPSCI 453 / 591 / NTU-ST550ASpring 2005 homepage</title><lf></head><lf> <much more document text following here (not shown)>
+
+a. Was the server able to successfully find the document or not? What time was the document reply provided?
+yes. Date: Tue, 07 Mar 2008.
+
+b. When was the document last modified?
+Sat, 10 Dec2005 18:27:46
+
+c. How many bytes are there in the document being returned?
+3874
+
+d. What are the first 5 bytes of the document being returned? Did the server agree to a persistent connection?
+<!doc
+yes
+
+P6. Obtain the HTTP/1.1 specification (RFC 2616). Answer the following questions:
+
+a. Explain the mechanism used for signaling between the client and server to indicate that a persistent connection is being closed. Can the client, the server, or both signal the close of a connection?
+only the server can close a connection.
+the right answer:
+client and server both can close a connection
+
+b. What encryption services are provided by HTTP?
+TLS
+the right answer:
+HTTP don't provide excryption services.
+
+c. Can a client open three or more simultaneous connections with a given server?
+yes
+the right answer:
+a single-user client SHOULD NOT maintain more than 2 connections.
+
+d. Either a server or a client may close a transport connection between them if either one detects the connection has been idle for some time. Is it possible that one side starts closing a connection while the other side is transmitting data via this connection? Explain.
+yes
+the client can interrupt the connection.
+
+P7. Assume that the RTT between a client and the local DNS server is TTl , while the RTT between the local DNS server and other DNS servers is RTTr . Assume that no DNS server performs caching.
+
+a. What is the total response time for the scenario illustrated in Figure 2.19?
+TTl+RTTl*3
+the right answer:
+2TTl+RTTl*3
+
+b. What is the total response time for the scenario illustrated in Figure 2.20?
+TTl+RTTl*3
+the right answer:
+2TTl+RTTl*3
+
+c. Assume now that the DNS record for the requested name is cached at the local DNS server. What is the total response time for the two scenarios?
+TTl
+the right answer:
+2TTl
+
+P8. Referring to Problem P7, suppose the HTML file references eight very small objects on the same server. Neglecting transmission times, how much time elapses with
+
+a. Non-persistent HTTP with no parallel TCP connections?
+2TTl+3RTTl+16TTl
+
+b. Non-persistent HTTP with the browser configured for 5 parallel connections?
+2TTl+3RTTl+2TTl
+the right answer:
+2TTl+3RTTl+4TTl
+
+c. Persistent HTTP?
+2TTl+3RTTl+9TTl
+the right answer:
+2TTl+3RTTl+TTl
+
+P9. Consider Figure 2.12, for which there is an institutional network connected to the Internet. Suppose that the average object size is 850,000 bits and that the average request rate from the institution’s browsers to the origin servers is 16 requests per second. Also suppose that the amount of time it takes from when the router on the Internet side of the access link forwards an HTTP request until it receives the response is three seconds on average (see Section 2.2.5). Model the total average response time as the sum of the average access delay (that is, the delay from Internet router to institution router) and the average Internet delay. For the average access delay, use ∆/(1 - ∆B), where ∆ is the average time required to send an object over the access link and b is the arrival rate of objects to the access link.
+
+a. Find the total average response time.
+(3+ ∆/(1 - ∆B))*16
+the right answer:
+∆=L/R=850000bits/(15000000bits/seconds)=0.0567s
+B=16requests/seconds
+∆B=B*∆=16requests/seconds*0.0567seconds=0.9072
+average access delay = ∆/(1 - ∆B) =0.0567/0.0928=0.611s
+total average delay = average access delay + average Internet delay = 0.611 + 3 =3.611s
+
+b. Now suppose a cache is installed in the institutional LAN. Suppose the miss rate is 0.4. Find the total response time.
+∆=0.85/100=0.0085s
+∆B=16*0.0085=0.136
+average access delay = 0.0085/0.864 = 0.01s
+0.4 * 3.611 =1.44s
+
+the right answer:
+0.6*0+0.4*3.089=1.24s
+
+P10. Assume you request a webpage consisting of one document and five images.
+
+The document size is 1 kbyte, all images have the same size of 50 kbytes, the download rate is 1 Mbps, and the RTT is 100 ms. How long does it take to obtain the whole webpage under the following conditions? (Assume no DNS name query is needed and the impact of the request line and the headers in the HTTP messages is negligible).
+
+a. Nonpersistent HTTP with serial connections.
+50kb/(1Mb/s)=50/1024=0.05s
+0.05*5+0.1*6=0.85s
+
+the right answer:
+7RTT+7RTT+5*0.05s=14*0.1+0.25=1.65s
+
+b. Nonpersistent HTTP with two parallel connections.
+0.05*3+0.1*3=0.45s
+
+the right answer:
+2RTT+3RRT*2+3*0.05=0.8+0.15=0.95s
+
+c. Nonpersistent HTTP with six parallel connections.
+0.05+0.1=0.15s
+
+the right answer:
+2RTT+RTT*2+0.05=0.4+0.05=0.45s
+
+d. Persistent HTTP with one connection.
+0.1+0.05-0.15s
+
+the right answer:
+RTT+RTT+RTT+5*0.05=3*0.1+0.25=0.65s
+
+P11. Generalize the results obtained for the first and the last scenario in the previous problem to a document size of Ld bytes, N images with size of Li bytes (for 0 <=i < N), a rate of R byte/s and an RTT of RTTavg .
+(2+N)*RTTavg*2+(Ld+L1+...LN)/R
+
+RTTavg*3+(Ld+L1+...LN)/b
+
+P12. Write a simple TCP program for a server that accepts lines of input from a client and prints the lines onto the server’s standard output. (You can do this by modifying the TCPServer.py program in the text.) Compile and execute your program. On any other machine that contains a Web browser, set the proxy server in the browser to the host that is running your server program; also configure the port number appropriately. Your browser should now send its GET request messages to your server, and your server should display the messages on its standard output. Use this platform to determine whether your browser generates conditional GET messages for objects that are locally cached.
+
+P13. Describe a few scenarios in which mail access protocols are not needed.
+the right answer:
+the MAIL FROM
+the From: on the mail itself is NOT an SMTP message
+
+P14. Why does an SMTP server retry to transmit a message even though TCP is used to connect with the destination?
+Because the network is not always good. When the network is bad, an SMTP server should retry to transmit a message.
+
+P15. Read RFC 5321 for SMTP. What does MTA stand for? Consider the following received spam e-mail (modified from a real spam e-mail). Assuming only the originator of this spam e-mail is malicious and all other hosts are honest, identify the malacious host that has generated this spam e-mail.
+
+From - Fri Nov 07 13:41:30 2008 Return-Path: <tennis5@pp33head.com> Received: from barmail.cs.umass.edu (barmail.cs.umass. edu
+[128.119.240.3]) by cs.umass.edu (8.13.1/8.12.6) for <hg@cs.umass.edu>; Fri, 7 Nov 2008 13:27:10 -0500 Received: from asusus-4b96 (localhost [127.0.0.1]) by barmail.cs.umass.edu (Spam Firewall) for <hg@cs.umass. edu>; Fri, 7 Nov 2008 13:27:07 -0500 (EST) Received: from asusus-4b96 ([58.88.21.177]) by barmail. cs.umass.edu for <hg@cs.umass.edu>; Fri, 07 Nov 2008 13:27:07 -0500 (EST) Received: from [58.88.21.177] by inbnd55.exchangeddd. com; Sat, 8 Nov 2008 01:27:07 +0700 From: ”Jonny” <tennis5@pp33head.com> To: <hg@cs.umass.edu>
+
+Subject: How to secure your savings
+
+malicious host:58.88.21.177
+
+P16. Read the DNS SRV RFC, RFC 2782. What is the purpose of the SRV record?
+the purpose of the SRV record allow a serveral hosts with a single domain, some are primary hosts, others are backups.
+
+P17. Consider accessing your e-mail with POP3.
+
+a. Suppose you have configured your POP mail client to operate in the download-and-delete mode. Complete the following transaction:
+
+C: list S: 1 498 S: 2 912 S: .
+
+C: retr 1 S: blah blah ... S: ..........blah S: .
+
+C: dele 1
+C: quit
+S: +OK the POP3 server signing off
+
+?
+
+b. Suppose you have configured your POP mail client to operate in the download-and-keep mode. Complete the following transaction:
+
+C: list S: 1 498 S: 2 912 S: .
+
+C: retr 1
+S: blah blah ... S: ..........blah S: .
+
+C: quit
+S: +OK
+
+c. Suppose you have configured your POP mail client to operate in the download-and-keep mode. Using your transcript in part (b), suppose you retrieve messages 1 and 2, exit POP, and then five minutes later you again access POP to retrieve new e-mail. Suppose that in the five-minute interval no new messages have been sent to you. Provide a transcript of this second POP session.
+
+C: list S: 1 498 S: 2 912 S: .
+
+C: retr 1 S: blah blah ... S: ..........blah S: .
+
+C: retr 2 S: blah blah ... S: ..........blah S: .
+C: quit
+S: +OK the POP3 server signing off
+
+P18. a. What is a whois database?
+DNS lookup: domain to ip
+
+b. Use various whois databases on the Internet to obtain the names of two DNS servers. Indicate which whois databases you used.
+8.8.8.8
+114.114.114.114
+
+c. Use nslookup on your local host to send DNS queries to three DNS servers: your local DNS server and the two DNS servers you found in part (b). Try querying for Type A, NS, and MX reports. Summarize your findings.
+
+d. Use nslookup to find a Web server that has multiple IP addresses. Does the Web server of your institution (school or company) have multiple IP addresses?
+yes
+
+e. Use the ARIN whois database to determine the IP address range used by your university.
+
+f. Describe how an attacker can use whois databases and the nslookup tool to perform reconnaissance on an institution before launching an attack.
+
+g. Discuss why whois databases should be publicly available.
+
+P19. In this problem, we use the useful dig tool available on Unix and Linux hosts to explore the hierarchy of DNS servers. Recall that in Figure 2.19, a DNS server in the DNS hierarchy delegates a DNS query to a DNS server lower in the hierarchy, by sending back to the DNS client the name of that lower-level DNS server. First read the man page for dig, and then answer the following questions. 
+
+a. Starting with a root DNS server (from one of the root servers [a-m]. root-servers.net), initiate a sequence of queries for the IP address for your department’s Web server by using dig. Show the list of the names of DNS servers in the delegation chain in answering your query.
+
+b. Repeat part (a) for several popular Web sites, such as google.com, yahoo .com, or amazon.com.
+
+P20. Consider the scenarios illustrated in Figures 2.12 and 2.13. Assume the rate of the institutional network is Rl and that of the bottleneck link is Rb. Suppose there are N clients requesting a file of size L with HTTP at the same time. For what values of Rl would the file transfer takes less time when a proxy is installed at the institutional network? (Assume the RTT between a client and any other host in the institutional network is negligible.)
+First Download time = L/Rb
+Total Download time = NL/Rl
+
+P21. Suppose that your department has a local DNS server for all computers in the department. You are an ordinary user (i.e., not a network/system administrator). Can you determine if an external Web site was likely accessed from a computer in your department a couple of seconds ago? Explain. 
+if the external web site was accessed acouple of seconds ago, the query time will be 0 second when you dig the web site.
+
+P22. Consider distributing a file of F = 15 Gbits to N peers. The server has an upload rate of us = 30 Mbps, and each peer has a download rate of di = 2 Mbps and an upload rate of u. For N = 10, 100, and 1,000 and u = 300 Kbps, 700 Kbps, and 2 Mbps, prepare a chart giving the minimum distribution time for each of the combinations of N and u for both client-server distribution and P2P distribution.
+
+client-server distribution
+
+max{NF/us,F/di}
+N=10
+max{10*15G/30M,15G/2M}=7680
+N=100
+max{100*15G/30M,15G/2M}=51200
+N=1000
+max{1000*15G/30M,15G/2M}=512000
++---------+----+-----+------+
+|         |N=10|N=100|N=1000|
++---------+----+-----+------+
+|u=300Kbps|7680|51200|512000|
++---------+----+-----+------+
+|u=700Kbps|7680|51200|512000|
++---------+----+-----+------+
+|u=2Mbps  |7680|51200|512000|
++---------+----+-----+------+
+ 
+P2P distribution
+
+max{F/us,F/di,NF/(us+Nu)}
+F/us=15G/30M=512
+F/di=15G/2M=7680
+NF/(us+Nu)=15N/(30M+Nu)
++---------+----+-----+------+
+|         |N=10|N=100|N=1000|
++---------+----+-----+------+
+|u=300Kbps|7680|25600|46546 |
++---------+----+-----+------+
+|u=700Kbps|7680|15360|21041 |
++---------+----+-----+------+
+|u=2Mbps  |7680|7680 |7680  |
++---------+----+-----+------+
+
+P23. Consider distributing a file of F bits to N peers using a client-server architecture. Assume a fluid model where the server can simultaneously transmit to multiple peers, transmitting to each peer at different rates, as long as the combined rate does not exceed us.
+
+a. Suppose that us/N <= dmin. Specify a distribution scheme that has a distribution time of NF/us.
+max{NF/us,F/di}
+NF/us >= F/dmin
+
+b. Suppose that us/N >= dmin. Specify a distribution scheme that has a distribution time of F/dmin.
+max{NF/us,F/di}
+F/dmin >= NF/us
+
+c. Conclude that the minimum distribution time is in general given by max{NF/us, F/dmin}. 
+
+P24. Consider distributing a file of F bits to N peers using a P2P architecture. Assume a fluid model. For simplicity assume that dmin is very large, so that peer download bandwidth is never a bottleneck.
+
+a. Suppose that us <= (us + u1 + . . . + uN)/N. Specify a distribution scheme that has a distribution time of F/us.
+max{F/us, NF/(us + u1 + . . . + uN)}
+F/us >= NF/(us + u1 + . . . + uN)
+
+b. Suppose that us >= (us + u1 + . . . + uN)/N. Specify a distribution scheme that has a distribution time of NF/(us + u1 + . . . + uN).
+max{F/us, NF/(us + u1 + . . . + uN)}
+NF/(us + u1 + . . . + uN) >= F/us
+
+c. Conclude that the minimum distribution time is in general given by max{F/us, NF/(us + u1 + . . . + uN)}.
+
+P25. Suppose Bob joins a BitTorrent torrent, but he does not want to upload any data to any other peers (so called free-riding).
+
+a. Bob claims that he can receive a complete copy of the file that is shared by the swarm. Is Bob’s claim possible? Why or why not?
+
+b. Bob further claims that he can further make his “free-riding” more efficient by using a collection of multiple computers (with distinct IP addresses) in the computer lab in his department. How can he do that? 
+
+P26. Consider a DASH system for which there are N video versions (at N different rates and qualities) and N audio versions (at N different rates and qualities). Suppose we want to allow the player to choose at any time any of the N video versions and any of the N audio versions.
+
+a.If we create files so that the audio is mixed in with the video, so server sends only one media stream at given time, how many files will the server need to store (each a different URL)?
+N
+
+b. If the server instead sends the audio and video streams separately and has the client synchronize the streams, how many files will the server need to store?
+2N
+
+P27. Install and compile the Python programs TCPClient and UDPClient on one host and TCPServer and UDPServer on another host.
+
+a. Suppose you run TCPClient before you run TCPServer. What happens? Why?
+can't establish connection, because the tcpclient need negotiate tcpserver first
+
+b. Suppose you run UDPClient before you run UDPServer. What happens? Why?
+can transfer data, udp can transfer data directly
+
+c. What happens if you use different port numbers for the client and server sides?
+tcp can't eatablish connection, udp can't transfer data
+
+P28. Suppose that in UDPClient.py, after we create the socket, we add the line: clientSocket.bind((’’, 5432)) Will it become necessary to change UDPServer.py? What are the port numbers for the sockets in UDPClient and UDPServer? What were they before making this change?
+No, the port number should be same
+The right answer:
+the udp server choose the port, the client send data through the server port, the udp client let the os to choose the port for client, then the server receive the data with the client port number.
+
+P29. Can you configure your browser to open multiple simultaneous connections to a Web site? What are the advantages and disadvantages of having a large number of simultaneous TCP connections?
+yes, the advantages: you can speed the loading. the disadvantages: the server resource should consume more 
+
+P30. We have seen that Internet TCP sockets treat the data being sent as a byte stream but UDP sockets recognize message boundaries. What are one advantage and one disadvantage of byte-oriented API versus having the API explicitly recognize and preserve application-defined message boundaries?
+
+P31. What is the server placement strategy adopted by Netflix for its CDN? How is content replicated at the different servers?
+both enter deep and bring home strategy
+
